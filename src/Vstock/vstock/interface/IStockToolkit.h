@@ -10,7 +10,7 @@ struct Capital
 class IStockToolkit
 {
 public:
-    virtual ~IStockToolkit();
+    virtual ~IStockToolkit() {}
     virtual double stockPrice(Capital cap) = 0;
     virtual int income(Capital cap, double newIncome, Capital& capNew) = 0;
 };
