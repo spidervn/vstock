@@ -9,7 +9,7 @@ CTaxFormula::~CTaxFormula()
 {
 }
 
-double CTaxFormula::calcTax(double income, int numAdoptPeople)
+double CTaxFormula::calcTax(double income, int numAdoptPeople, double AllReduce)
 {
 	double ret;
 	double ADOPT_UNIT = 3600000;
@@ -33,7 +33,7 @@ double CTaxFormula::calcTax(double income, int numAdoptPeople)
 	double margin1[] = { 0, 0.25, 0.75, 1.95, 4.75, 9.75, 18.15 };
 	double margin2[] = { 0, 0.25, 0.75, 1.65, 3.25, 5.85, 9.85 };
 
-	double taxedInc = (income - adoptReduce);
+	double taxedInc = (income - adoptReduce - AllReduce);
 
 	markSize = sizeof(marks)/sizeof(marks[0]);
 	markId = -1;
@@ -68,6 +68,7 @@ double CTaxFormula::calcTax(double income, int numAdoptPeople)
 		double margin = margin1[markId]*1000000;
 		double part1 = ((taxedInc - markSubtract) * markPer[markId] / 100);
 		printf("taxedInc = %f\r\n", taxedInc);
+		printf("Tax percent=%f\r\n", markPer[markId]);
 		printf("margin1 = %f\r\n", margin);
 		printf("Part1 = %f\r\n", part1);
 		printf("Marksubtract=%f\r\n", markSubtract);

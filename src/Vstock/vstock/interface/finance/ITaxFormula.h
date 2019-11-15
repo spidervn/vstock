@@ -5,7 +5,7 @@ class ITaxFormula
 {
 public:
 	virtual ~ITaxFormula() {}
-	virtual double calcTax(double , int numAdoptPeople=0) = 0;
+	virtual double calcTax(double , int numAdoptPeople=0, double AllReduce = 0) = 0;
 };
 
 #endif
