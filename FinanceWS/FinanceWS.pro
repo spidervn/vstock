@@ -31,4 +31,5 @@ HEADERS += \
         mainwindow.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    UI/categorydlg.ui
