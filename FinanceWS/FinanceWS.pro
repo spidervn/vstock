@@ -25,11 +25,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    UI/dlg_invoice_all.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    UI/dlg_invoice_all.h
 
 FORMS += \
         mainwindow.ui \
-    UI/categorydlg.ui
+    UI/categorydlg.ui \
+    UI/dlg_invoice_all.ui
