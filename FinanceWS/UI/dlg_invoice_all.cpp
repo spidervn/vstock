@@ -12,3 +12,14 @@ DlgInvoiceAll::~DlgInvoiceAll()
 {
     delete ui;
 }
+
+
+void DlgInvoiceAll::on_pushButton_clicked()
+{
+
+}
+
+void DlgInvoiceAll::on_DlgInvoiceAll_accepted()
+{
+    printf("Accepted");
+}

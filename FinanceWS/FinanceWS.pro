@@ -35,4 +35,6 @@ HEADERS += \
 FORMS += \
         mainwindow.ui \
     UI/categorydlg.ui \
-    UI/dlg_invoice_all.ui
+    UI/dlg_invoice_all.ui \
+    UI/categoryall_dlg.ui \
+    UI/categoryadd_dlg.ui
