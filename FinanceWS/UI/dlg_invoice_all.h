@@ -20,6 +20,8 @@ private slots:
 
     void on_DlgInvoiceAll_accepted();
 
+    void on_pushButton_2_clicked();
+
 private:
     Ui::DlgInvoiceAll *ui;
 };

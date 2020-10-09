@@ -21,5 +21,10 @@ void DlgInvoiceAll::on_pushButton_clicked()
 
 void DlgInvoiceAll::on_DlgInvoiceAll_accepted()
 {
-    printf("Accepted");
+
+}
+
+void DlgInvoiceAll::on_pushButton_2_clicked()
+{
+
 }

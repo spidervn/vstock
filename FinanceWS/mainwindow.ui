@@ -34,9 +34,37 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuMain">
+    <property name="title">
+     <string>Tính năng chung</string>
+    </property>
+    <addaction name="menu_exit"/>
+   </widget>
+   <widget class="QMenu" name="menuT_i_ch_nh">
+    <property name="title">
+     <string>Tài chính</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="actionT_nh_thu"/>
+    <addaction name="actionT_nh_l_ng"/>
+    <addaction name="separator"/>
+    <addaction name="actionDanh_m_c_m_t_h_ng"/>
+    <addaction name="actionH_a_n"/>
+   </widget>
+   <widget class="QMenu" name="menuDanh_ba">
+    <property name="title">
+     <string>Danh bạ</string>
+    </property>
+    <addaction name="actionCon_ng_i"/>
+    <addaction name="separator"/>
+    <addaction name="actionC_ng_ty_t_ch_c"/>
+   </widget>
+   <addaction name="menuMain"/>
+   <addaction name="menuT_i_ch_nh"/>
+   <addaction name="menuDanh_ba"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -47,6 +75,41 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="menu_exit">
+   <property name="text">
+    <string>Thoát</string>
+   </property>
+  </action>
+  <action name="actionT_nh_thu">
+   <property name="text">
+    <string>Tính thuế</string>
+   </property>
+  </action>
+  <action name="actionT_nh_l_ng">
+   <property name="text">
+    <string>Tính lương</string>
+   </property>
+  </action>
+  <action name="actionCon_ng_i">
+   <property name="text">
+    <string>Con người</string>
+   </property>
+  </action>
+  <action name="actionC_ng_ty_t_ch_c">
+   <property name="text">
+    <string>Công ty/tổ chức</string>
+   </property>
+  </action>
+  <action name="actionDanh_m_c_m_t_h_ng">
+   <property name="text">
+    <string>Danh mục mặt hàng</string>
+   </property>
+  </action>
+  <action name="actionH_a_n">
+   <property name="text">
+    <string>Hóa đơn</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
