@@ -49,8 +49,11 @@ int testMainWindow(QApplication* app)
     fileToolBar->addAction(openAct);
     fileToolBar->setAllowedAreas(Qt::TopToolBarArea | Qt::BottomToolBarArea | Qt::LeftToolBarArea);
 
-    qmain->addToolBar(Qt::TopToolBarArea, fileToolBar);
+    //    QDockWidget* contentsWindow = new QDockWidget(QObject::tr("Table of Contents"));
+    //    QListWidget* headingList = new QListWidget(contentsWindow);
+    //    contentsWindow->setWidget(headingList);
 
+    qmain->addToolBar(Qt::TopToolBarArea, fileToolBar);
     qmain->show();
 
     return app->exec();
