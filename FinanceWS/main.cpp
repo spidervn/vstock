@@ -1,6 +1,60 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <QtWidgets>
+#include <QObject>
+#include <QString>
+#include <QtCore/QString>
+#include <QMessageBox>
+
+int SLOTNewFile()
+{
+    QMessageBox* pbox = new QMessageBox();
+    pbox->setText("OK");
+    pbox->exec();
+    return 0;
+}
+
+int SLOTOpenFile()
+{
+    return 0;
+}
+
+int testMainWindow(QApplication* app)
+{
+
+    QMainWindow* qmain = new QMainWindow();
+    qmain->resize(600, 400);
+
+    QAction* newAct;
+    QAction* openAct;
+
+    newAct = new QAction(QObject::tr("&New"), qmain->window()); // this = MainWindow
+    newAct->setShortcuts(QKeySequence::New);
+    newAct->setStatusTip(QObject::QObject::tr("Create a new file"));
+
+    openAct = new QAction(QObject::tr("&Open"), qmain->window());
+    openAct->setShortcut(QKeySequence::Open);
+    openAct->setStatusTip(QObject::tr("Open an existing file"));
+
+    QObject::connect(newAct, &QAction::triggered, qmain->window(), SLOTNewFile);
+    QObject::connect(openAct, &QAction::triggered, qmain->window(), SLOTOpenFile);
+
+    QMenu* fileMenu = qmain->menuBar()->addMenu(QObject::tr("&File"));
+    fileMenu->addAction(newAct);
+    fileMenu->addAction(openAct);
+    fileMenu->addSeparator();
+
+    QToolBar* fileToolBar = qmain->addToolBar(QObject::tr("File"));
+    fileToolBar->addAction(newAct);
+    fileToolBar->addAction(openAct);
+    fileToolBar->setAllowedAreas(Qt::TopToolBarArea | Qt::BottomToolBarArea | Qt::LeftToolBarArea);
+
+    qmain->addToolBar(Qt::TopToolBarArea, fileToolBar);
+
+    qmain->show();
+
+    return app->exec();
+}
 
 int nested_layout(QApplication* app)
 {
@@ -86,6 +140,5 @@ int layout(QApplication* app)
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
-    return nested_layout(&a);
+    return testMainWindow(&a);
 }
