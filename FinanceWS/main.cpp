@@ -5,6 +5,41 @@
 #include <QString>
 #include <QtCore/QString>
 #include <QMessageBox>
+#include <libpq-fe.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "Test/testmodelview.h"
+
+int testPG()
+{
+    PGconn* conn;
+    PGresult* res;
+    int nFields;
+    int i, j;
+
+    const char* connInfo = "dbname=postgres";
+
+    conn = PQconnectdb(connInfo);
+
+    if (PQstatus(conn) == CONNECTION_OK)
+    {
+        printf("Connection to database failed: %s\r\n");
+        PQfinish(conn);
+        return -1;
+    }
+
+    res = PQexec(conn, "SELECT pg_catalog.set_config('search_path', '', false)");
+    if (PQresultStatus(res) != PGRES_TUPLES_OK)
+    {
+        fprintf(stderr, "SET failed: %s", PQerrorMessage(conn));
+        PQclear(res);
+        PQfinish(conn);
+        return -1;
+    }
+    PQclear(res);
+
+    return 0;
+}
 
 int SLOTNewFile()
 {
@@ -17,6 +52,28 @@ int SLOTNewFile()
 int SLOTOpenFile()
 {
     return 0;
+}
+
+int testLayout(QApplication* app)
+{
+    QWidget* window = new QWidget;
+    QPushButton* button1 = new QPushButton("One");
+    QPushButton* button2 = new QPushButton("Two");
+    QPushButton* button3 = new QPushButton("Three");
+    QPushButton* button4 = new QPushButton("Four");
+    QPushButton* button5 = new QPushButton("Five");
+
+    QHBoxLayout* layout = new QHBoxLayout;
+    layout->addWidget(button1);
+    layout->addWidget(button2);
+    layout->addWidget(button3);
+    layout->addWidget(button4);
+    layout->addWidget(button5);
+
+    window->setLayout(layout);
+    window->show();
+
+    return app->exec();
 }
 
 int testMainWindow(QApplication* app)
@@ -49,10 +106,11 @@ int testMainWindow(QApplication* app)
     fileToolBar->addAction(openAct);
     fileToolBar->setAllowedAreas(Qt::TopToolBarArea | Qt::BottomToolBarArea | Qt::LeftToolBarArea);
 
-    //    QDockWidget* contentsWindow = new QDockWidget(QObject::tr("Table of Contents"));
-    //    QListWidget* headingList = new QListWidget(contentsWindow);
-    //    contentsWindow->setWidget(headingList);
+    QDockWidget* contentsWindow = new QDockWidget(QObject::tr("Table of Contents"));
+    QListWidget* headingList = new QListWidget(contentsWindow);
+    contentsWindow->setWidget(headingList);
 
+    qmain->setCentralWidget(contentsWindow);
     qmain->addToolBar(Qt::TopToolBarArea, fileToolBar);
     qmain->show();
 
@@ -143,5 +201,11 @@ int layout(QApplication* app)
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    return testMainWindow(&a);
+    //return testMainWindow(&a);
+    // return testLayout(&a);
+    // return nested_layout(&a);
+    TestModelView tmv;
+    tmv.runTest(&a);
+
+    return 0;
 }

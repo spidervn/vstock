@@ -26,11 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    UI/dlg_invoice_all.cpp
+    UI/dlg_invoice_all.cpp \
+    Test/testmodelview.cpp
 
 HEADERS += \
         mainwindow.h \
-    UI/dlg_invoice_all.h
+    UI/dlg_invoice_all.h \
+    Test/testmodelview.h
 
 FORMS += \
         mainwindow.ui \
@@ -38,3 +40,16 @@ FORMS += \
     UI/dlg_invoice_all.ui \
     UI/categoryall_dlg.ui \
     UI/categoryadd_dlg.ui
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../setup/database/postgres/postgresql-12.4/BINDIR/lib/release/ -lpq
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../setup/database/postgres/postgresql-12.4/BINDIR/lib/debug/ -lpq
+else:unix: LIBS += -L$$PWD/../../../../setup/database/postgres/postgresql-12.4/BINDIR/lib/ -lpq
+
+INCLUDEPATH += $$PWD/../../../../setup/database/postgres/postgresql-12.4/BINDIR/include
+DEPENDPATH += $$PWD/../../../../setup/database/postgres/postgresql-12.4/BINDIR/include
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../../../setup/database/postgres/postgresql-12.4/BINDIR/lib/release/libpq.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../../../setup/database/postgres/postgresql-12.4/BINDIR/lib/debug/libpq.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../../../setup/database/postgres/postgresql-12.4/BINDIR/lib/release/pq.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../../../setup/database/postgres/postgresql-12.4/BINDIR/lib/debug/pq.lib
+else:unix: PRE_TARGETDEPS += $$PWD/../../../../setup/database/postgres/postgresql-12.4/BINDIR/lib/libpq.a
