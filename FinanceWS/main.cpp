@@ -205,7 +205,7 @@ int main(int argc, char *argv[])
     // return testLayout(&a);
     // return nested_layout(&a);
     TestModelView tmv;
-    tmv.runTest(&a);
+    tmv.runTestView(&a);
 
     return 0;
 }

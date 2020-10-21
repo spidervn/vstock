@@ -27,12 +27,16 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     UI/dlg_invoice_all.cpp \
-    Test/testmodelview.cpp
+    Test/testmodelview.cpp \
+    Test/stringlistmodel.cpp \
+    Test/spinboxdelegate.cpp
 
 HEADERS += \
         mainwindow.h \
     UI/dlg_invoice_all.h \
-    Test/testmodelview.h
+    Test/testmodelview.h \
+    Test/stringlistmodel.h \
+    Test/spinboxdelegate.h
 
 FORMS += \
         mainwindow.ui \
