@@ -1,7 +1,9 @@
 #include "CTaxFormula.h"
+#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <dynsocc/fundamental/stdex/string.hpp>
+#include <dynsocc/fundamental/stdex/textview.h>
 
 using namespace dynsocc;
 using namespace std;
@@ -16,8 +18,8 @@ CTaxFormula::~CTaxFormula()
 double CTaxFormula::calcTax(double income, int numAdoptPeople, double AllReduce)
 {
 	double ret;
-	double ADOPT_UNIT = 3600000;
-	double ADOPT_SELF = 9000000;
+	double ADOPT_UNIT = 4400000;
+	double ADOPT_SELF = 11000000;
 	double adoptReduce =  ADOPT_UNIT * numAdoptPeople + ADOPT_SELF;
 
 	int METHOD = 1; 	// or 2
@@ -37,15 +39,24 @@ double CTaxFormula::calcTax(double income, int numAdoptPeople, double AllReduce)
 	double margin1[] = { 0, 0.25, 0.75, 1.95, 4.75, 9.75, 18.15 };
 	double margin2[] = { 0, 0.25, 0.75, 1.65, 3.25, 5.85, 9.85 };
 
-	double taxedInc = (income - adoptReduce - AllReduce); 
+	double taxedInc = (income - adoptReduce - AllReduce);
 
 
-	double UNIT_SALARY = 1490000;
+	double UNIT_SALARY = 1490000;	// Can Update
 	double dSocialInsurance = 0.0;
 	double dMaxSocialInsurance = 20 * UNIT_SALARY;
 	double dSocialEmployeePercent = 0.105; //  10.5%
 	double dInsurance = 0.0;
+	double dInsuranceUnEmploy = 0.0;
+
+
+	double d_ins_medical_p = 0.015;
+	double d_ins_retire_p = 0.08;
+	double d_ins_unemploy_p = 0.01;
+
 	// Social Insurance 
+
+
 	
 	if (taxedInc > dMaxSocialInsurance)
 	{
@@ -93,13 +104,26 @@ double CTaxFormula::calcTax(double income, int numAdoptPeople, double AllReduce)
 		double markSubtract = (markId  > 0) ? marks[markId-1] : 0;
 		double margin = margin1[markId]*1000000;
 		double part1 = ((taxedInc - markSubtract) * markPer[markId] / 100);
+		/*
 		printf("taxedInc = %f\r\n", taxedInc);
 		printf("Tax percent=%f\r\n", markPer[markId]);
 		printf("margin1 = %f\r\n", margin);
 		printf("Part1 = %f\r\n", part1);
 		printf("Marksubtract=%f\r\n", markSubtract);
 		printf("Insurance=%s\r\n", stringutil::format_number_thousand_separator(dInsurance, res).c_str());
+		*/
 		ret = part1  + margin;
+
+		vector<int> vcol_size({22, 20});
+		vector<int> vformat({DYNSOCC_TEXT_ALIGN_LEFT, DYNSOCC_TEXT_ALIGN_RIGHT});
+
+		std::cout << TextView::column_print(vcol_size, vformat, vector<string>{ "Income:", stringutil::format_number_thousand_separator(income, res)}) << std::endl;
+		std::cout << TextView::column_print(vcol_size, vformat, vector<string>{ "Self&dependent Reduce:", stringutil::format_number_thousand_separator(adoptReduce, res)}) << std::endl;
+
+		std::cout << TextView::column_print(vcol_size, vformat, vector<string>{ "Insurance you paid:", stringutil::format_number_thousand_separator(dInsurance, res)}) << std::endl;
+		std::cout << TextView::column_print(vcol_size, vformat, vector<string>{ "Tax you paid:", stringutil::format_number_thousand_separator(ret, res)}) << std::endl;
+		std::cout << TextView::column_print(vcol_size, vformat, vector<string>{ "Remaining:", stringutil::format_number_thousand_separator(income - ret - dInsurance, res)}) << std::endl;
+
 	}
 	else if (METHOD == 2)
 	{
